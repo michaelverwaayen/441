@@ -1,0 +1,106 @@
+#include <stdio.h> 
+#include <math.h>
+#define MAX_INPUTS 4
+#define MAXINT 8
+
+#define NODES 8 // total number of nodes 
+#define LEVELS 4 //number of levels in the tree 
+#define STATIONS 3 // Number of ready stations 
+
+int RandomNumberGenerator()
+{
+	int seed = 12345;
+	int randint = 0;
+	srandom(seed);
+	while(randint == 0)
+	{
+		randint = random();	
+		randint = randint % (MAXINT + 1)
+	}
+int array[ pow( 2,LEVELS - 1 ) ];
+int main()
+{
+	// k 
+	// sending stations 
+	//starting level 
+	// Go from starting level to sending station 
+
+	
+	for( int l = 0 ; l < LEVELS; l++ )
+	{
+
+		int kValues = pow( 2,l );
+		for( int j = 0; j < LEVELS; j += 2 )
+		{
+			int startingLevel = pow( 2,j );
+			for( int i = 0;i < STATIONS; i++ )
+			{
+				int sendingStation = RandomNumberGenerator();
+				array[i] = sendingStation;
+				//Calculate the success rate of it  	
+				//Function here to calculate success 
+			}
+			RecursiveFunction( startingLevel );			
+		}				
+	}
+	return 0;
+}
+
+//Take in my array of 0's and 1's and try and isolate my 1's with 0's
+void RecursiveFunction( int startingLevel )
+{
+	int startSpots[];
+	int endSpots[];
+	int count = 0;
+	numberOfProbes = 2 ^ startingLevel;
+	first = 2^startingLevel;
+	last = NODES - 1;
+	Probe( first, last );
+	
+	// HWO THE FK I DO F/L
+
+	
+	
+} 
+
+void Probe(first,last)
+{
+	int failure,success,idle,count,counterDenominator,counterNominator ;
+	
+	for(int i=0; i < NODES; i++)
+	{
+		if(array[i] == 1)
+		{
+			count++;
+			printf("ADDED TO LIST");
+		}
+	}
+	if( count > 1)
+	{
+		failure = 1;
+	}
+	if(count == 0)
+	{
+		success = 1;
+	}
+	if(count == 1)
+	{
+		idle = 1;
+	}
+	
+	if(failure == 1)
+	{
+		counterDenominator++;
+		Probe( first, ( (last / 2) - 1 ) );
+		Probe( ( last / 2 ), last );
+	}
+	else if( idle == 1) 
+	{
+		counterDenominator++;
+	}
+	else
+	{
+		counterNominator++;
+	}
+	
+}
