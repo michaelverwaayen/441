@@ -15,9 +15,11 @@ int RandomNumberGenerator()
 	while(randint == 0)
 	{
 		randint = random();	
-		randint = randint % (MAXINT + 1)
+		randint = randint % (MAXINT + 1);
 	}
-int array[ pow( 2,LEVELS - 1 ) ];
+}
+int array[pow( 2,LEVELS - 1 )];
+
 int main()
 {
 	// k 
@@ -53,8 +55,8 @@ void RecursiveFunction( int startingLevel )
 	int endSpots[];
 	int count = 0;
 	numberOfProbes = 2 ^ startingLevel;
-	first = 2^startingLevel;
-	last = NODES - 1;
+	int first = 2^startingLevel;
+	int last = NODES - 1;
 	Probe( first, last );
 	
 	// HWO THE FK I DO F/L
@@ -63,7 +65,7 @@ void RecursiveFunction( int startingLevel )
 	
 } 
 
-void Probe(first,last)
+void Probe(int first,int last)
 {
 	int failure,success,idle,count,counterDenominator,counterNominator ;
 	
