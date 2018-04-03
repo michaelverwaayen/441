@@ -7,6 +7,7 @@
 #define LEVELS 4 //number of levels in the tree 
 #define STATIONS 3 // Number of ready stations 
 
+// Looks fine 
 int RandomNumberGenerator()
 {
 	int seed = 12345;
@@ -18,6 +19,7 @@ int RandomNumberGenerator()
 		randint = randint % (MAXINT + 1);
 	}
 }
+//looks fine buy causes error 
 int array[pow( 2,LEVELS - 1 )];
 
 int main()
@@ -27,7 +29,7 @@ int main()
 	//starting level 
 	// Go from starting level to sending station 
 
-	
+	//Works fine 
 	for( int l = 0 ; l < LEVELS; l++ )
 	{
 
@@ -51,9 +53,9 @@ int main()
 //Take in my array of 0's and 1's and try and isolate my 1's with 0's
 void RecursiveFunction( int startingLevel )
 {
-	int startSpots[];
-	int endSpots[];
-	int count = 0;
+	//int startSpots[STATIONS];
+	//int endSpots[STATIONS];
+	//int count = 0;
 	numberOfProbes = 2 ^ startingLevel;
 	int first = 2^startingLevel;
 	int last = NODES - 1;
@@ -67,8 +69,8 @@ void RecursiveFunction( int startingLevel )
 
 void Probe(int first,int last)
 {
-	int failure,success,idle,count,counterDenominator,counterNominator ;
-	
+	int failure,success,idle,count,counterDenominator,counterNominator;
+	//Get the number of STATIONS should be equal to STATIONS 
 	for(int i=0; i < NODES; i++)
 	{
 		if(array[i] == 1)
@@ -77,6 +79,7 @@ void Probe(int first,int last)
 			printf("ADDED TO LIST");
 		}
 	}
+	//Make some flags
 	if( count > 1)
 	{
 		failure = 1;
@@ -89,17 +92,19 @@ void Probe(int first,int last)
 	{
 		idle = 1;
 	}
-	
+	// Call my recursion 
 	if(failure == 1)
 	{
-		counterDenominator++;
-		Probe( first, ( (last / 2) - 1 ) );
-		Probe( ( last / 2 ), last );
-	}
+		counterDenominator++;																						//						 *
+		Probe( first, ( (last / 2) - 1 ) ); // left side															//					   *  |*
+		Probe( ( last / 2 ), last );//Right side 																	//					  *  *|  *	
+	}																												//					 *  * | *  *
+	// do nothing 
 	else if( idle == 1) 
 	{
 		counterDenominator++;
 	}
+	// do nothing 
 	else
 	{
 		counterNominator++;
