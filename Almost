@@ -1,0 +1,152 @@
+#include <stdio.h> 
+#include <math.h>
+#include <ctime>
+#include <list>
+#include <algorithm>
+#include <iostream>
+#define MAX_INPUTS 4
+#define MAXINT 8
+#define NODES 8 // total number of nodes 
+#define LEVELS 4 //number of levels in the tree 
+#define STATIONS 3 // Number of ready stations 
+
+using namespace std;
+int array[(int)pow( 2,LEVELS - 1 )];
+list<int> usedNumbers;
+int globalAvg;
+int localAvgLOL;
+// Looks fine 
+void Probe( int first, int last, int array[] )
+{
+	int failure,success,idle,count,counterDenominator,counterNominator = 0;
+	int successCounter,failureCounter,idleCounter = 0;
+	counterDenominator = 1;
+	//Get the number of STATIONS should be equal to STATIONS 
+	for(int i=first; i <= last; i++)
+	{
+		if(array[i] == 1)
+		{
+			count++;			
+		}
+	}
+	//Make some flags
+	if( count > 1)
+	{
+		failure = 1;
+	}
+	if(count == 0)
+	{
+		success = 1;
+	}
+	if(count == 1)
+	{
+		idle = 1;
+	}
+	// Fini
+	if(success == 1)
+	{
+		successCounter++;
+		counterNominator++;
+		counterDenominator++;										
+	}																												
+	// do nothing 
+	else if( idle == 1) 
+	{
+		idleCounter++;
+		counterDenominator++;
+	}
+	// do nothing 
+	else
+	{
+		counterDenominator++;
+		failureCounter++;																						
+		Probe( first,  ( ( ( first + last + 1 )  / 2 )- 1 ) ,array ); // left side															
+		Probe( ( (first + last + 1)  / 2), last, array );//Right side 						
+	}
+	printf("NOMINATOR  %d \t", counterNominator);
+	printf("DENOMINATOR  %d \t", counterDenominator);
+	float x =  (counterNominator / counterDenominator) * 100 ; 
+	printf("The success rate is %% %d \n", x);
+	
+}
+
+void RecursiveFunction( int startingLevel, int array[] )
+{
+	int numberOfProbes = pow(2,startingLevel);
+	int first;
+	int last;
+	for(int i = 0; i < 1;i++)
+	{
+		first = i * ( NODES / numberOfProbes );
+		last = ( NODES / numberOfProbes ) + ( i * ( NODES / numberOfProbes ) - 1 );
+		Probe( first, last, array);
+		
+	}
+	
+} 
+
+
+int RandomNumberGenerator(list<int> usedNumbers)
+{
+	int randint = 0;	
+	while(randint == 0)
+	{
+		
+		randint = random();	
+		randint = randint % (NODES + 1);
+		bool found = ( find ( usedNumbers.begin(), usedNumbers.end(), randint ) != usedNumbers.end());
+		if( found == true)
+		{
+			RandomNumberGenerator(usedNumbers);
+		}
+		usedNumbers.push_back(randint);
+	}
+}
+//looks fine buy causes error 
+
+
+int main()
+{
+	// k 
+	// sending stations 
+	//starting level 
+	// Go from starting level to sending station 
+	int startingLevel;
+	int sendingStation;
+	int seed = time(NULL);
+	int j;
+	srandom(seed);
+	
+	cout << " Number of Nodes:" << NODES << endl;
+	cout << "Number of levels in the tree:" << LEVELS << endl;
+	
+
+	
+	//Works fine 
+	for( int l = 0 ; l < LEVELS; l++ )
+	{
+		
+		int kValues = pow( 2,l );
+		cout << "K:" << kValues << endl;
+		for( j = 0; j < LEVELS; j += 2 )
+		{
+			//startingLevel = pow( 2,j );
+			cout << "Starting Level:" << j << endl;
+			for( int i = 0;i <= STATIONS; i++ )
+			{
+				sendingStation = RandomNumberGenerator(usedNumbers);
+				array[i] = sendingStation;
+				//Calculate the success rate of it  	
+				//Function here to calculate success 
+			}	
+			RecursiveFunction( j, array );	
+		}			
+	}
+			
+				
+	return 0;
+}
+
+//Take in my array of 0's and 1's and try and isolate my 1's with 0's
+
+
